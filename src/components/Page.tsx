@@ -3,14 +3,18 @@ import type { ReactNode } from "react";
 import { SiteFooter, SiteHeader } from "./Chrome";
 import type { Content } from "../types";
 
+export async function loadContent(): Promise<Content> {
+  const response = await fetch("/api/content");
+  if (response.ok) return response.json();
+  const fallback = await fetch("/content.json");
+  if (!fallback.ok) throw new Error("Не удалось загрузить клуб");
+  return fallback.json();
+}
+
 export function useContent() {
   return useQuery({
     queryKey: ["content"],
-    queryFn: async (): Promise<Content> => {
-      const response = await fetch("/api/content");
-      if (!response.ok) throw new Error("Не удалось загрузить клуб");
-      return response.json();
-    },
+    queryFn: loadContent,
   });
 }
 

@@ -3,13 +3,8 @@ import { useMemo, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { SiteFooter, SiteHeader } from "../components/Chrome";
 import { MetalButton } from "../components/MetalButton";
-import type { Booking, Content, Slot } from "../types";
-
-async function loadContent(): Promise<Content> {
-  const response = await fetch("/api/content");
-  if (!response.ok) throw new Error("fail");
-  return response.json();
-}
+import { loadContent } from "../components/Page";
+import type { Booking, Slot } from "../types";
 
 function dateKeys(count: number): string[] {
   const keys: string[] = [];
@@ -150,6 +145,7 @@ export function BookPage() {
             </div>
             <h2>Время</h2>
             {slots.isFetching && <p>Смотрим свободные станции…</p>}
+            {slots.isError && <p className="banner">Свободные часы здесь не открылись. Позвоните в клуб: <a href="tel:+79930680416">+7 (993) 068-04-16</a></p>}
             <div className="slots">
               {(slots.data?.slots ?? []).map((item) => (
                 <button
