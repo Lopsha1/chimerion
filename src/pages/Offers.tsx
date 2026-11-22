@@ -5,11 +5,7 @@ export function OffersPage() {
   const content = useContent();
   return (
     <PageShell>
-      <PageIntro
-        kicker="Акции"
-        title="Бонусы клуба"
-        text="Тексты из Telegram @chimerionufa. Онлайн-запись считает опубликованный тариф и сама бонус не списывает."
-      />
+      <PageIntro kicker="Акции" title="Бонусы клуба" />
       <div className="promo-grid">
         {(content.data?.promos ?? []).map((promo, index) => (
           <article key={promo.id} className="promo-card" style={{ animationDelay: `${index * 80}ms` }}>
@@ -17,7 +13,7 @@ export function OffersPage() {
             <div>
               <h2>{promo.title}</h2>
               <p>{promo.text}</p>
-              <p className="source">{promo.condition}</p>
+              {promo.condition ? <p className="source">{promo.condition}</p> : null}
             </div>
           </article>
         ))}

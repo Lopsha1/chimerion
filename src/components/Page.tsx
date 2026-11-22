@@ -29,12 +29,12 @@ export function PageShell({ children, className }: { children: ReactNode; classN
   );
 }
 
-export function PageIntro({ kicker, title, text }: { kicker: string; title: string; text: string }) {
+export function PageIntro({ kicker, title, text }: { kicker: string; title: string; text?: string }) {
   return (
     <header className="page-intro">
       <p className="eyebrow">{kicker}</p>
       <h1>{title}</h1>
-      <p className="lede">{text}</p>
+      {text ? <p className="lede">{text}</p> : null}
     </header>
   );
 }
